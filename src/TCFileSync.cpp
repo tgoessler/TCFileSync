@@ -20,6 +20,7 @@
 #include "TCOutput.h"
 #include "TCString.h"
 #include "TCWString.h"
+#include "TCWFile.h"
 #include "TCWFileName.h"
 #include "TCSystem.h"
 
@@ -105,6 +106,10 @@ namespace tc::file_sync
             {
                auto val = wstring::ToString(*(++it));
                m_settings.destination = wfile_name::Simplify(val);
+               if (!wfile::Exists(m_settings.destination))
+               {
+                  wfile::CreateDir(m_settings.destination);
+               }
             }
             else if (*it == "--backup_folder" || *it == "-b")
             {
